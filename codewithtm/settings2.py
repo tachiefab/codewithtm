@@ -19,28 +19,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'codewithtm@gmail.com' 
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Tachie Musah <codewithtm@gmail.com>'
-
-ADMINS = (
-    ('Admin', EMAIL_HOST_USER),
-)
-MANAGERS = ADMINS
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('SECRET_KEY', 'j2b_z(*4w+#)t^nz3)0n3da(tcj&3##klo73m76(x7%3z)b%85n!')
+SECRET_KEY = '&53v=7vth_pjs=v-wbl_z%2a0z_b622io+w(#i54$d)#5r^=lv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
-
-ALLOWED_HOSTS = ['codewithtm.herokuapp.com']
+DEBUG = True
 
 ALLOWED_HOSTS = []
 HOST_SERVER =  'http://127.0.0.1:8000'
@@ -87,9 +70,9 @@ INSTALLED_APPS = [
 ]
 
 
-MAILCHIMP_API_KEY = os.environ.get("MAILCHIMP_API_KEY")
-MAILCHIMP_DATA_CENTER = os.environ.get("MAILCHIMP_DATA_CENTER")
-MAILCHIMP_EMAIL_LIST_ID = os.environ.get("MAILCHIMP_EMAIL_LIST_ID")
+MAILCHIMP_API_KEY = "6bea8167b652cb4cdce560afc772d0da-us10"
+MAILCHIMP_DATA_CENTER = "us10"
+MAILCHIMP_EMAIL_LIST_ID = "6d1b0d0d3e"
 
 
 MIDDLEWARE = [
@@ -133,11 +116,6 @@ DATABASES = {
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
-
-# Heroku database
-import dj_database_url
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
 
 
 # Password validation
@@ -193,21 +171,9 @@ from codewithtm.ckeditorconf.conf import *
 # Django Restframework settings
 from codewithtm.restconf.main import *
 
-# Celery settings
 CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
-
-# Heroku settings
-CORS_REPLACE_HTTPS_REFERER      = True
-HOST_SCHEME                     = "https://"
-SECURE_PROXY_SSL_HEADER         = ('HTTP_X_FORWARDED_PROTO', 'https')
-SECURE_SSL_REDIRECT             = True
-SESSION_COOKIE_SECURE           = True
-CSRF_COOKIE_SECURE              = True
-SECURE_HSTS_INCLUDE_SUBDOMAINS  = True
-SECURE_HSTS_SECONDS             = 1000000
-SECURE_FRAME_DENY               = True
