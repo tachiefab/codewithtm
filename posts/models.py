@@ -21,8 +21,8 @@ from .utils import get_read_time, get_post_for_direction
 
 User = get_user_model()
 
-def upload_post_image(instance, filename):
-    return "post/{username}/{filename}".format(username=instance.author.user.username, filename=filename)
+# def upload_post_image(instance, filename):
+#     return "post/{username}/{filename}".format(username=instance.author.user.username, filename=filename)
 
 class Post(models.Model):
     author = models.ForeignKey(
@@ -32,15 +32,15 @@ class Post(models.Model):
     )
     title = models.CharField(max_length=90)
     slug = models.SlugField(max_length=90, unique=True)
-    image = models.ImageField(upload_to=upload_post_image, 
-            null=True, 
-            blank=True, 
-            width_field="width_field", 
-            height_field="height_field"
-            )
+    # image = models.ImageField(upload_to=upload_post_image, 
+    #         null=True, 
+    #         blank=True, 
+    #         width_field="width_field", 
+    #         height_field="height_field"
+    #         )
     image_path = models.TextField(blank=True, null=True)
-    height_field = models.IntegerField(default=0)
-    width_field = models.IntegerField(default=0)
+    # height_field = models.IntegerField(default=0)
+    # width_field = models.IntegerField(default=0)
     article = models.TextField(validators=[validate_content])
     summary = models.TextField(validators=[validate_content])
     read_time =  models.IntegerField(default=0)
@@ -75,12 +75,10 @@ class Post(models.Model):
         return reverse("api-posts:detail", kwargs={"slug":self.slug})
 
     def get_image_url(self):
-        try:
-            img = self.image_path
-        except:
-            img = self.image.url
-            if img is None:
-                img = "https://static.staah.net/images/noimage-640x480.jpg"
+        img = self.image_path
+        if img:
+            return img
+        img = "https://static.staah.net/images/noimage-640x480.jpg"
         return img
 
     def get_next_url(self):

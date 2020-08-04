@@ -34,7 +34,7 @@ class PostSerializer(serializers.ModelSerializer):
             'article',
         ]
 
-    def image(self, obj):
+    def get_image(self, obj):
         return obj.get_image_url()
 
     def get_uri(self, obj):

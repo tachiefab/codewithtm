@@ -12,8 +12,8 @@ class PostAdminForm(forms.ModelForm):
                     'slug', 
                     'order', 
                     'read_time', 
-                    'height_field', 
-                    'width_field', 
+                    # 'height_field', 
+                    # 'width_field', 
                     'updated', 
                     'timestamp'
                     )

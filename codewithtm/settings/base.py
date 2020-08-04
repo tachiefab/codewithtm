@@ -179,8 +179,8 @@ STATIC_URL = '/static/'
 # )
 
 
-# MEDIA_URL = '/media/'
-# MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-server', 'media-root')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-server', 'media-root')
 # # MEDIA_URL = '/media/'
 # # MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "media_root")
 # PROTECTED_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static-server", "protected")
