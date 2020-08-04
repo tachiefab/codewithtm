@@ -49,6 +49,7 @@ HOST_SERVER =  'http://127.0.0.1:8000'
 CORS_ORIGIN_WHITELIST = (
      'http://localhost:4200',
      'http://127.0.0.1:4200',
+     'https://codewithtm.herokuapp.com'
 )
 
 
