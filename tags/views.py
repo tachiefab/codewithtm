@@ -13,7 +13,7 @@ class TagListAPIView(generics.ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         post_slug = self.request.GET.get("post_slug")
-        tags = []
+        tags = Tag.objects.all()[:10]
         if post_slug:
             post_qs  = get_object_or_404(Post, slug=post_slug)
             tags = post_qs.tags.all()
