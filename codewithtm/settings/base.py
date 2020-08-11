@@ -36,14 +36,14 @@ CORS_ORIGIN_WHITELIST = (
 )
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'youremail@gmail.com' 
-EMAIL_HOST_PASSWORD = 'yourpassword'
+EMAIL_HOST_USER = 'tachiefab311@gmail.com' 
+EMAIL_HOST_PASSWORD = 'tachiefab4974'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = 'Your Name <you@email.com>'
 
 ADMINS = (
-    ('You', 'you@email.com'),
+    ('Admin', EMAIL_HOST_USER),
 )
 MANAGERS = ADMINS
 

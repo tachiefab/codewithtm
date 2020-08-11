@@ -16,6 +16,16 @@ User = get_user_model()
 HOST_SERVER = settings.HOST_SERVER
 
 
+class EmailVerificationSerializer(serializers.ModelSerializer):
+    token = serializers.CharField(max_length=555)
+
+    class Meta:
+        model = User
+        fields = [
+            'token'
+            ]
+
+
 class UserPublicSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
     first_name = serializers.SerializerMethodField()
