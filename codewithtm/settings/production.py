@@ -64,17 +64,17 @@ INSTALLED_APPS = [
         'django.contrib.sessions',
         'django.contrib.messages',
         'django.contrib.staticfiles',
-
+         # third party apps
         'django.contrib.sites',
         'django.contrib.flatpages',
         'django_celery_beat',
         'django_celery_results',
-        # third party apps
         'ckeditor',
         'ckeditor_uploader',
         'corsheaders',
         'markdown_deux',
         'rest_framework',
+         'drf_yasg',
         # local 
         'aboutus',
         'accounts',
@@ -91,6 +91,16 @@ INSTALLED_APPS = [
         'tags',
 ]
 
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Bearer': {
+            'type': 'apiKey',
+            'name': 'Authorization',
+            'in': 'header'
+        }
+    }
+}
 
 MAILCHIMP_API_KEY = os.environ.get("MAILCHIMP_API_KEY")
 MAILCHIMP_DATA_CENTER = os.environ.get("MAILCHIMP_DATA_CENTER")
