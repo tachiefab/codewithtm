@@ -1,7 +1,14 @@
 from django.conf.urls import url, include
 from django.contrib import admin
 from rest_framework_jwt.views import refresh_jwt_token, obtain_jwt_token
-from .views import AuthAPIView, RegisterAPIView, VerifyEmail
+from .views import (
+				AuthAPIView, 
+				RegisterAPIView, 
+				VerifyEmail, 
+				RequestPasswordResetEmail,
+				PasswordTokenCheckAPI,
+				SetNewPasswordAPIView
+				)
 
 app_name= 'accounts'
 
@@ -11,4 +18,11 @@ urlpatterns = [
     url(r'^register/$', RegisterAPIView.as_view(), name='register'),
     url(r'^jwt/$', obtain_jwt_token),
     url(r'^jwt/refresh/$', refresh_jwt_token),
+
+    url(r'^request-reset-email/$', RequestPasswordResetEmail.as_view(),
+         name="request-reset-email"),
+    url(r'^password-reset/<uidb64>/<token>/$',
+         PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),
+    url(r'^password-reset-complete/$', SetNewPasswordAPIView.as_view(),
+         name='password-reset-complete')
 ]
