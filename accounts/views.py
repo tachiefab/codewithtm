@@ -30,6 +30,7 @@ from django.utils.encoding import (
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
+from rest_framework.reverse import reverse as api_reverse
 from .utils import Util
 
 jwt_payload_handler             = api_settings.JWT_PAYLOAD_HANDLER
@@ -83,16 +84,19 @@ class RegisterAPIView(generics.GenericAPIView):
         user_data = serializer.data
         user = User.objects.get(email=user_data['email'])
         token = RefreshToken.for_user(user).access_token
-        current_site = get_current_site(request).domain
-        relativeLink = reverse('api-auth:email-verify')
-        absurl = 'http://'+current_site+relativeLink+"?token="+str(token)
+        # print(token)
+        # current_site = get_current_site(request).domain
+        current_site = settings.HOST_PRODUCTION_SERVER 
+        # relativeLink = reverse('api-auth:email-verify')
+        absurl = current_site + "auth/very-email/" + str(token)
         email_body = 'Hi '+user.username + \
             ' Use the link below to verify your email \n' + absurl
         data = {'email_body': email_body, 'to_email': user.email,
                 'email_subject': 'Verify your email'}
 
         Util.send_email(data)
-        return Response(user_data, status=status.HTTP_201_CREATED)
+        # return Response(user_data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class VerifyEmail(APIView):
