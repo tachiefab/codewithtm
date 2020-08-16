@@ -6,7 +6,6 @@ from .views import (
 				RegisterAPIView, 
 				VerifyEmail, 
 				RequestPasswordResetEmail,
-				PasswordTokenCheckAPI,
 				SetNewPasswordAPIView
 				)
 
@@ -21,8 +20,6 @@ urlpatterns = [
 
     url(r'^request-reset-email/$', RequestPasswordResetEmail.as_view(),
          name="request-reset-email"),
-    url(r'^password-reset/<uidb64>/<token>/$',
-         PasswordTokenCheckAPI.as_view(), name='password-reset-confirm'),
     url(r'^password-reset-complete/$', SetNewPasswordAPIView.as_view(),
          name='password-reset-complete')
 ]

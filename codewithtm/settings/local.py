@@ -29,7 +29,7 @@ SECRET_KEY = '&53v=7vth_pjs=v-wbl_z%2a0z_b622io+w(#i54$d)#5r^=lv'
 DEBUG = True
 
 ALLOWED_HOSTS = []
-HOST_PRODUCTION_SERVER =  'http://localhost:4200/'
+HOST_PRODUCTION_SERVER =  'http://127.0.0.1:4200/'
 HOST_SERVER =  'http://127.0.0.1:8000'
 CORS_ORIGIN_WHITELIST = (
      'http://localhost:4200',
