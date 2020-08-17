@@ -24,11 +24,11 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'codewithtm@gmail.com' 
+EMAIL_HOST_USER = 'tachiefab311@gmail.com' 
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Tachie Musah <codewithtm@gmail.com>'
+DEFAULT_FROM_EMAIL = 'Tachie Musah <tachiefab311@gmail.com>'
 
 ADMINS = (
     ('Admin', EMAIL_HOST_USER),
