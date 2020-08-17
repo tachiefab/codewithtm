@@ -82,6 +82,7 @@ INSTALLED_APPS = [
         'authors',
         'categories',
         'comments',
+        'reachus',
         'faqs',
         'likes',
         'marketing',
