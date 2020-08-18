@@ -42,7 +42,7 @@ MANAGERS = ADMINS
 SECRET_KEY = os.environ.get('SECRET_KEY', 'j2b_z(*4w+#)t^nz3)0n3da(tcj&3##klo73m76(x7%3z)b%85n!')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['codewithtm.herokuapp.com']
 HOST_PRODUCTION_SERVER =  'https://codewithtm-58c9d.web.app/'
