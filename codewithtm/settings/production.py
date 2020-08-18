@@ -28,12 +28,12 @@ EMAIL_HOST_USER = 'tachiefab311@gmail.com'
 EMAIL_HOST_PASSWORD = 'tachiefab4974' #os.environ.get('EMAIL_HOST_PASSWORD')
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = 'Tachie Musah <tachiefab311@gmail.com>'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER #'Tachie Musah <tachiefab311@gmail.com>'
 
-ADMINS = (
-    ('Admin', EMAIL_HOST_USER),
-)
-MANAGERS = ADMINS
+# ADMINS = (
+#     ('Admin', EMAIL_HOST_USER),
+# )
+# MANAGERS = ADMINS
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
