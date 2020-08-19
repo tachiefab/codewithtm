@@ -19,11 +19,13 @@ from rest_framework.permissions import (
     )
 from accounts.permissions import IsOwnerOrReadOnly
 from comments.models import Comment
+from posts.models import Post
 from .serializers import (
     CommentListSerializer,
     CommentDetailSerializer,
     CommentCreateSerializer
     )
+
 
 User = get_user_model()
 
@@ -57,6 +59,9 @@ class CommentListAPIView(ListAPIView):
     def get_queryset(self, *args, **kwargs):
         queryset_list = []
         query = self.request.GET.get("q")
+        obj_slug = self.request.GET.get("slug")
+        # Uncomment the below code to use generic foreign key
+        """
         obj_id = self.request.GET.get("obj_id")
         type = self.request.GET.get("type", "post")
         if obj_id:
@@ -68,6 +73,20 @@ class CommentListAPIView(ListAPIView):
                 if obj_qs.exists():
                     content_obj     = obj_qs.first()
                     queryset_list   = Comment.objects.filter_by_instance(content_obj)
+
+        type = self.request.GET.get("type", "post")
+        if obj_id:
+            model_type      = type
+            model_qs        = ContentType.objects.filter(model=model_type)
+            if model_qs.exists():  
+                SomeModel       = model_qs.first().model_class()
+        """
+
+        if obj_slug:
+            obj_qs          = Post.objects.filter(slug=obj_slug)
+            if obj_qs.exists():
+                content_obj     = obj_qs.first()
+                queryset_list   = Comment.objects.filter_by_instance(content_obj)
         else:
             queryset_list = Comment.objects.filter(id__gte=0)
         if query:
