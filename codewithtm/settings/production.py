@@ -46,7 +46,7 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['codewithtm.herokuapp.com']
 HOST_PRODUCTION_SERVER =  'https://codewithtm-58c9d.web.app/'
-HOST_SERVER =  'http://127.0.0.1:8000'
+HOST_SERVER =  HOST_PRODUCTION_SERVER #'http://127.0.0.1:8000'
 
 CORS_ORIGIN_WHITELIST = (
      'http://localhost:4200',
