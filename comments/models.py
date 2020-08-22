@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from .validators import validate_content
+from codewithtm.validators import validate_content
 
 
 class CommentManager(models.Manager):
@@ -17,11 +17,12 @@ class CommentManager(models.Manager):
         qs = super(CommentManager, self).filter(content_type=content_type, object_id= obj_id).filter(parent=None)
         return qs
 
-    def create_by_model_type(self, model_type, obj_id, content, user, parent_obj=None):
+    def create_by_model_type(self, model_type, slug, content, user, parent_obj=None):
         model_qs = ContentType.objects.filter(model=model_type)
         if model_qs.exists():
             SomeModel = model_qs.first().model_class()
-            obj_qs = SomeModel.objects.filter(id=obj_id)
+            obj_qs = SomeModel.objects.filter(slug=slug)
+            # obj_qs = SomeModel.objects.filter(id=obj_id) #use this when comments are created based on id
             if obj_qs.exists() and obj_qs.count() == 1:
                 instance = self.model()
                 instance.content = content
@@ -41,7 +42,7 @@ class Comment(models.Model):
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')
     parent      = models.ForeignKey("self", null=True, blank=True, on_delete=models.CASCADE)
-    content     = models.CharField(max_length=140, validators=[validate_content])
+    content = models.TextField(validators=[validate_content])
     timestamp   = models.DateTimeField(auto_now_add=True)
 
     objects = CommentManager()

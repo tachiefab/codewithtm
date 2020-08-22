@@ -53,18 +53,20 @@ CKEDITOR_CONFIGS = {
 
             ]},
         ],
-        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        'toolbar': 'Custom',  # put selected toolbar config here
         # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
         # 'height': 291,
         # 'width': '100%',
-        # 'filebrowserWindowHeight': 725,
-        # 'filebrowserWindowWidth': 940,
+        'filebrowserWindowHeight': 725,
+        'filebrowserWindowWidth': 940,
         # 'toolbarCanCollapse': True,
         # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
         'tabSpaces': 4,
         'extraPlugins': ','.join([
             'uploadimage', # the upload image feature
             # your extra plugins here
+            'codesnippet',
+            'youtube',
             'div',
             'autolink',
             'autoembed',
@@ -78,11 +80,70 @@ CKEDITOR_CONFIGS = {
             'dialogui',
             'elementspath'
         ]),
+        'codeSnippet_theme': 'pojoaque',
     },
+
     'small': {
         'width': 850,
         'height': 200,
         'filebrowserWindowWidth': 975,
         'filebrowserWindowHeight': 550,
     },
+
+    # config.codeSnippet_theme = 'pojoaque';
+
+  #    'codewithtm': {
+  #   'width': '100%',
+  #   'height': 600,
+  #   'toolbar': 'Custom',
+  #   'extraPlugins': ','.join([
+  #     'codesnippet',
+  #     # 'youtube'
+  #   ]),
+  #   'toolbar_Custom': [
+  #     [
+  #       'Bold',
+  #       'Italic',
+  #       'Underline'
+  #     ],
+  #     [
+  #       'Font',
+  #       'FontSize',
+  #       'TextColor',
+  #       'BGColor'
+  #     ],
+  #     [
+  #       'NumberedList',
+  #       'BulletedList',
+  #       '-',
+  #       'Outdent',
+  #       'Indent',
+  #       '-',
+  #       'JustifyLeft',
+  #       'JustifyCenter',
+  #       'JustifyRight',
+  #       'JustifyBlock'
+  #     ],
+  #     [
+  #       'Link',
+  #       'Unlink'
+  #     ],
+  #     [
+  #       'RemoveFormat',
+  #       'Source',
+  #       'CodeSnippet',
+  #       'Image',
+  #       'Youtube'
+  #     ]
+  #   ],
+    
+  # },
 }
+
+
+
+
+# CKEDITOR_CONFIGS={
+ 
+  
+# }

@@ -52,7 +52,7 @@ class CommentSerializer(serializers.ModelSerializer):
 class CommentCreateSerializer(CommentSerializer):
         user = UserPublicSerializer(read_only=True)
         type = serializers.CharField(required=False, write_only=True)
-        obj_id = serializers.IntegerField(write_only=True)
+        slug = serializers.CharField(required=True, write_only=True)
         parent_id = serializers.IntegerField(required=False)
 
         class Meta:
@@ -62,7 +62,7 @@ class CommentCreateSerializer(CommentSerializer):
                 'user',
                 'content',
                 'type',
-                'obj_id',
+                'slug',
                 'parent_id',
                 'date_display',
                 'timesince'
@@ -75,8 +75,9 @@ class CommentCreateSerializer(CommentSerializer):
             if not model_qs.exists() or model_qs.count() != 1:
                 raise serializers.ValidationError("This is not a valid content type")
             SomeModel       = model_qs.first().model_class()
-            obj_id            = data.get("obj_id")
-            obj_qs          = SomeModel.objects.filter(id=obj_id)
+            slug            = data.get("slug")
+            obj_qs          = SomeModel.objects.filter(slug=slug)
+            # print(obj_qs)
             if not obj_qs.exists() or obj_qs.count() != 1:
                 raise serializers.ValidationError("This is not a id for this content type")
             parent_id       = data.get("parent_id")
@@ -89,14 +90,14 @@ class CommentCreateSerializer(CommentSerializer):
         def create(self, validated_data):
             content         = validated_data.get("content")
             model_type      = validated_data.get("type", "post")
-            obj_id            = validated_data.get("obj_id")
+            slug            = validated_data.get("slug")
             parent_obj      = None
             parent_id       = validated_data.get("parent_id")
             if parent_id:
                 parent_obj  = Comment.objects.filter(id=parent_id).first()
             user            = self.context['user']
             comment         = Comment.objects.create_by_model_type(
-                                model_type, obj_id, content, user,
+                                model_type, slug, content, user,
                                 parent_obj=parent_obj,
                     )
             return comment
