@@ -35,7 +35,7 @@ class PublicProfileSerializer(ModelSerializer):
             img = obj.get_profile_image_url()
             image = HOST_SERVER + img
         except:
-           image = None
+           image = obj.get_profile_image_url()
         return image
 
     def get_bio(self, obj):
