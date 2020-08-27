@@ -42,10 +42,10 @@ class PostSerializer(serializers.ModelSerializer):
         return api_reverse('api-posts:detail', kwargs={"slug": obj.slug}, request=request)
 
     def get_date_display(self, obj):
-        return obj.timestamp.strftime("%b %d, %Y at %I:%M %p")
+        return obj.published_date.strftime("%b %d, %Y")
 
     def get_timesince(self, obj):
-        return timesince(obj.timestamp) + " ago"
+        return timesince(obj.published_date) + " ago"
 
 
 class PostDetailInlineSerializer(PostSerializer):

@@ -16,13 +16,15 @@ from tags.models import Tag
 from categories.models import Category
 from comments.models import Comment
 # from notifications.tasks import notifications
-from .choices import STATUSES
+from .choices import STATUSES, STATUS_PUBLISHED
 from .utils import get_read_time, get_post_for_direction
 
 User = get_user_model()
 
-# def upload_post_image(instance, filename):
-#     return "post/{username}/{filename}".format(username=instance.author.user.username, filename=filename)
+
+class PostManager(models.Manager):
+    def all(self, *args, **kwargs):
+        return super(PostManager, self).filter(status=STATUS_PUBLISHED).filter(published_date__lte=timezone.now())
 
 class Post(models.Model):
     author = models.ForeignKey(
@@ -32,21 +34,12 @@ class Post(models.Model):
     )
     title = models.CharField(max_length=90)
     slug = models.SlugField(max_length=90, unique=True)
-    # image = models.ImageField(upload_to=upload_post_image, 
-    #         null=True, 
-    #         blank=True, 
-    #         width_field="width_field", 
-    #         height_field="height_field"
-    #         )
     image_path = models.TextField(blank=True, null=True)
-    # height_field = models.IntegerField(default=0)
-    # width_field = models.IntegerField(default=0)
     article = models.TextField(validators=[validate_content])
     summary = models.TextField(validators=[validate_content])
     read_time =  models.IntegerField(default=0)
     category = models.ForeignKey(
-                            Category, 
-                            # related_name='category_posts', 
+                            Category,  
                             on_delete=models.CASCADE,
                             blank=True,
                             null=True
@@ -58,6 +51,8 @@ class Post(models.Model):
     updated     = models.DateTimeField(auto_now=True)
     timestamp   = models.DateTimeField(auto_now_add=True)
     active = models.BooleanField(default=True)
+
+    objects = PostManager()
 
     def __str__(self):
         return str(self.title)
@@ -84,13 +79,13 @@ class Post(models.Model):
     def get_next_url(self):
         post = get_post_for_direction(self, "next")
         if post is not None:
-            return post.slug #get_absolute_url()
+            return post.slug
         return None
 
     def get_previous_url(self):
         post = get_post_for_direction(self, "previous")
         if post is not None:
-            return post.slug #get_absolute_url()
+            return post.slug
         return None
 
     @property
