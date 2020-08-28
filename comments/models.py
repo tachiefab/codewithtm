@@ -17,7 +17,7 @@ class CommentManager(models.Manager):
         qs = super(CommentManager, self).filter(content_type=content_type, object_id= obj_id).filter(parent=None)
         return qs
 
-    def create_by_model_type(self, model_type, slug, content, user, parent_obj=None):
+    def create_by_model_type(self, model_type, slug, content, name, email, website, user, parent_obj=None):
         model_qs = ContentType.objects.filter(model=model_type)
         if model_qs.exists():
             SomeModel = model_qs.first().model_class()
@@ -26,6 +26,9 @@ class CommentManager(models.Manager):
             if obj_qs.exists() and obj_qs.count() == 1:
                 instance = self.model()
                 instance.content = content
+                instance.name = name
+                instance.email = email
+                instance.website = website
                 instance.user = user
                 instance.content_type = model_qs.first()
                 instance.object_id = obj_qs.first().id
@@ -37,7 +40,16 @@ class CommentManager(models.Manager):
 
 
 class Comment(models.Model):
-    user        = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='user_comments')
+    user  = models.ForeignKey(
+                settings.AUTH_USER_MODEL,
+                null=True, 
+                blank=True,
+                on_delete=models.CASCADE, 
+                related_name='user_comments'
+                )
+    name = models.CharField(max_length=50, null=True, blank=True)
+    email = models.EmailField(max_length=220, null=True, blank=True)
+    website = models.CharField(max_length=220, null=True, blank=True)
     content_type = models.ForeignKey(ContentType, on_delete=models.CASCADE)
     object_id = models.PositiveIntegerField()
     content_object = GenericForeignKey('content_type', 'object_id')

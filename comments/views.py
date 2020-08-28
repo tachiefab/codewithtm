@@ -32,6 +32,7 @@ User = get_user_model()
 class CommentCreateAPIView(CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentCreateSerializer
+    permission_classes = [AllowAny]
 
     def get_serializer_context(self):
         context = super(CommentCreateAPIView, self).get_serializer_context()

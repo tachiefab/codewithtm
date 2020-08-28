@@ -60,6 +60,9 @@ class CommentCreateSerializer(CommentSerializer):
             fields = [
                 'id',
                 'user',
+                'name',
+                'email',
+                'website',
                 'content',
                 'type',
                 'slug',
@@ -77,7 +80,6 @@ class CommentCreateSerializer(CommentSerializer):
             SomeModel       = model_qs.first().model_class()
             slug            = data.get("slug")
             obj_qs          = SomeModel.objects.filter(slug=slug)
-            # print(obj_qs)
             if not obj_qs.exists() or obj_qs.count() != 1:
                 raise serializers.ValidationError("This is not a id for this content type")
             parent_id       = data.get("parent_id")
@@ -89,17 +91,27 @@ class CommentCreateSerializer(CommentSerializer):
 
         def create(self, validated_data):
             content         = validated_data.get("content")
+            name         = validated_data.get("name")
+            email         = validated_data.get("email")
+            website         = validated_data.get("website")
             model_type      = validated_data.get("type", "post")
             slug            = validated_data.get("slug")
             parent_obj      = None
+            # user            = None
             parent_id       = validated_data.get("parent_id")
             if parent_id:
                 parent_obj  = Comment.objects.filter(id=parent_id).first()
             user            = self.context['user']
             comment         = Comment.objects.create_by_model_type(
-                                model_type, slug, content, user,
-                                parent_obj=parent_obj,
-                    )
+                                                                model_type, 
+                                                                slug, 
+                                                                content, 
+                                                                name,
+                                                                email,
+                                                                website,
+                                                                user,
+                                                                parent_obj=parent_obj,
+                                                            )
             return comment
 
 

@@ -106,21 +106,27 @@ class RelatedPostAPIView(generics.ListAPIView):
 
 class LikeToggleAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
+    lookup_field = 'slug'
 
-    def get(self, request, pk, format=None):
+    def get(self, request, slug, format=None):
         sender = Post
         c_type = ContentType.objects.get_for_model(sender)
         try:
-            post_obj = Post.objects.get(id=pk)
+            post_obj = Post.objects.get(slug=slug)
             if post_obj:
                 try:
-                    like_qs = Like.objects.get( content_type=c_type, object_id=pk)
+                    pk = post_obj.id
+                    like_qs = Like.objects.get(content_type=c_type, object_id=pk)
                 except:
                     pass
                 if like_qs:
                     if request.user.is_authenticated:
                         is_liked = Like.objects.like_toggle(request.user, sender, like_qs)
-                        return Response({'liked': is_liked})
+                        return Response({
+                                        'liked': is_liked,
+                                        'likes_count': like_qs.likes_count
+                                        }
+                                        )
         except:
             message = "Post does not exist"
         return Response({"message": message}, status=400)
