@@ -3,6 +3,7 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
+from likes.models import Like
 from codewithtm.validators import validate_content
 
 
@@ -84,3 +85,14 @@ class Comment(models.Model):
         if self.parent is not None:
             return False
         return True
+
+
+def comment_like_receiver(sender, instance, created, *args, **kwargs):
+    c_type = ContentType.objects.get_for_model(sender)
+    if created:
+        new_like_obj = Like.objects.create(
+                    content_type=c_type,
+                    object_id=instance.id
+            )
+
+post_save.connect(comment_like_receiver, sender=Comment)

@@ -8,6 +8,7 @@ from rest_framework import serializers
 from accounts.serializers import UserPublicSerializer
 from comments.models import Comment
 from profiles.models import Profile
+from likes.models import Like
 
 User = get_user_model()
 HOST_SERVER = settings.HOST_SERVER
@@ -43,7 +44,7 @@ class CommentSerializer(serializers.ModelSerializer):
         return 0
 
     def get_date_display(self, obj):
-        return obj.timestamp.strftime("%b %d, %Y at %I:%M %p")
+        return obj.timestamp.strftime("%b %d, %Y")
 
     def get_timesince(self, obj):
         return timesince(obj.timestamp) + " ago"
@@ -71,7 +72,6 @@ class CommentCreateSerializer(CommentSerializer):
                 'timesince'
             ]
 
-
         def validate(self, data):
             model_type      = data.get("type", "post")
             model_qs        = ContentType.objects.filter(model=model_type)
@@ -97,7 +97,6 @@ class CommentCreateSerializer(CommentSerializer):
             model_type      = validated_data.get("type", "post")
             slug            = validated_data.get("slug")
             parent_obj      = None
-            # user            = None
             parent_id       = validated_data.get("parent_id")
             if parent_id:
                 parent_obj  = Comment.objects.filter(id=parent_id).first()
@@ -154,12 +153,16 @@ class CommentDetailSerializer(CommentSerializer):
     reply_count = serializers.SerializerMethodField()
     content_object_url = serializers.SerializerMethodField()
     replies =   serializers.SerializerMethodField()
+    likes_count = serializers.SerializerMethodField()
+    did_like = serializers.SerializerMethodField()
     class Meta:
         model = Comment
         fields = [
             'id',
             'content',
             'reply_count',
+            'did_like',
+            'likes_count',
             'timesince',
             'date_display',
             'content_object_url',
@@ -187,3 +190,33 @@ class CommentDetailSerializer(CommentSerializer):
         if obj.is_parent:
             return obj.children().count()
         return 0
+
+
+    def get_did_like(self, obj):
+        request = self.context.get("request")
+        sender = Comment
+        c_type = ContentType.objects.get_for_model(sender)
+        try:
+            user = request.user
+            if user.is_authenticated:
+                try:
+                    like_obj = Like.objects.get( content_type=c_type, object_id=obj.pk)
+                    liked_users = like_obj.liked.all()
+                except:
+                    pass
+                if user in liked_users:
+                    return True
+        except:
+            pass
+        return False
+
+    def get_likes_count(self, obj):
+        sender = Comment
+        c_type = ContentType.objects.get_for_model(sender)
+        likes = 0
+        try:
+            like_obj = Like.objects.get( content_type=c_type, object_id=obj.pk)
+            likes = like_obj.likes_count
+        except:
+            pass
+        return likes

@@ -2,7 +2,10 @@ from django.db.models import Q
 from django.contrib.contenttypes.models import ContentType
 from django.contrib.auth import get_user_model
 from django.shortcuts import get_object_or_404
+from rest_framework import permissions
+from rest_framework.response import Response
 from rest_framework.mixins import DestroyModelMixin, UpdateModelMixin
+from rest_framework.views import APIView
 from rest_framework.generics import (
     CreateAPIView,
     DestroyAPIView,
@@ -25,7 +28,7 @@ from .serializers import (
     CommentDetailSerializer,
     CommentCreateSerializer
     )
-
+from likes.models import Like
 
 User = get_user_model()
 
@@ -61,30 +64,8 @@ class CommentListAPIView(ListAPIView):
         queryset_list = []
         query = self.request.GET.get("q")
         obj_slug = self.request.GET.get("slug")
-        # Uncomment the below code to use generic foreign key
-        """
-        obj_id = self.request.GET.get("obj_id")
-        type = self.request.GET.get("type", "post")
-        if obj_id:
-            model_type      = type
-            model_qs        = ContentType.objects.filter(model=model_type)
-            if model_qs.exists():  
-                SomeModel       = model_qs.first().model_class()
-                obj_qs          = SomeModel.objects.filter(id=obj_id)
-                if obj_qs.exists():
-                    content_obj     = obj_qs.first()
-                    queryset_list   = Comment.objects.filter_by_instance(content_obj)
-
-        type = self.request.GET.get("type", "post")
-        if obj_id:
-            model_type      = type
-            model_qs        = ContentType.objects.filter(model=model_type)
-            if model_qs.exists():  
-                SomeModel       = model_qs.first().model_class()
-        """
-
         if obj_slug:
-            obj_qs          = Post.objects.filter(slug=obj_slug)
+            obj_qs          = Post.objects.filter(slug=obj_slug)#Modified to go for content types 
             if obj_qs.exists():
                 content_obj     = obj_qs.first()
                 queryset_list   = Comment.objects.filter_by_instance(content_obj)
@@ -97,4 +78,33 @@ class CommentListAPIView(ListAPIView):
                     Q(user__last_name__icontains=query)
                     ).distinct()
         return queryset_list
+
+class CommentLikeAPIView(APIView):
+    permission_classes = [permissions.IsAuthenticated]
+    # lookup_field = 'slug'
+
+    def get(self, request, pk, format=None):
+        sender = Comment
+        c_type = ContentType.objects.get_for_model(sender)
+        try:
+            comment_obj = Comment.objects.get(id=pk)
+            if comment_obj:
+                try:
+                    pk = comment_obj.id
+                    like_qs = Like.objects.get(content_type=c_type, object_id=pk)
+                except:
+                    pass
+                if like_qs:
+                    if request.user.is_authenticated:
+                        is_liked = Like.objects.like_toggle(request.user, sender, like_qs)
+                        print(request.user)
+                return Response({
+                                'liked': is_liked,
+                                'likes_count': like_qs.likes_count
+                                }
+                                )
+        except:
+            message = "Comment does not exist"
+            return Response({"message": message}, status=400)
+
 

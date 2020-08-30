@@ -1,6 +1,6 @@
 from django.conf.urls import url
 from .views import (
-	LikeToggleAPIView,
+	PostLikeToggleAPIView,
     PostAPIView, 
     PostAPIDetailView,
     RelatedPostAPIView,
@@ -12,5 +12,5 @@ urlpatterns = [
     url(r'^$', PostAPIView.as_view(), name='list'),
     url(r'^related/$', RelatedPostAPIView.as_view(), name='related-posts'),
     url(r'^(?P<slug>[\w-]+)/$', PostAPIDetailView.as_view(), name='detail'),
-    url(r'^(?P<slug>[\w-]+)/like/$', LikeToggleAPIView.as_view(), name='like-toggle'),
+    url(r'^(?P<slug>[\w-]+)/like/$', PostLikeToggleAPIView.as_view(), name='post-like'),
 ]

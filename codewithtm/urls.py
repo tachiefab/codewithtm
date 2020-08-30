@@ -44,6 +44,7 @@ urlpatterns = [
     path('api/categories/', include("categories.urls", namespace='categories-api')),
     path('api/comments/', include("comments.urls", namespace='comments-api')),
     path('api/faqs/', include('faqs.urls', namespace='api-faqs')),
+    # path('api/likes/', include('likes.urls', namespace='api-likes')),
     path('api/posts/', include('posts.urls', namespace='api-posts')),
     path('api/contact-us/', include('reachus.urls', namespace='api-reachus')),
     path('api/tags/', include('tags.urls', namespace='api-tags')),
