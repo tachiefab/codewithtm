@@ -3,5 +3,4 @@ from rest_framework import pagination
 
 class TMStoreAPIPagination(pagination.PageNumberPagination):
 	
-   page_size   =  100
-
+   page_size   =  5 #10
