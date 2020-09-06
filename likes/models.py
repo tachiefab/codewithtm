@@ -10,7 +10,13 @@ from django.contrib.contenttypes.models import ContentType
 
 class LikeManager(models.Manager):
 
-     def like_toggle(self, authenticated_user, sender, like_obj):
+    def filter_by_instance(self, instance):
+        content_type = ContentType.objects.get_for_model(instance.__class__)
+        obj_id = instance.id
+        qs = super(LikeManager, self).filter(content_type=content_type, object_id= obj_id)
+        return qs
+
+    def like_toggle(self, authenticated_user, sender, like_obj):
      
         if authenticated_user in like_obj.liked.all():
             is_liked = False

@@ -1,5 +1,6 @@
 from rest_framework import generics, mixins, permissions
 from django.shortcuts import get_object_or_404
+from django.contrib.auth import get_user_model
 from rest_framework.response import Response
 from django.contrib.contenttypes.models import ContentType
 from rest_framework.views import APIView
@@ -14,6 +15,8 @@ from .serializers import (
                         PostListInlineSerializer, 
                         PostListInlineMinimalSerializer
                         )
+User = get_user_model()
+
 
 class PostAPIDetailView(
                     mixins.UpdateModelMixin,
@@ -130,3 +133,4 @@ class PostLikeToggleAPIView(APIView):
         except:
             message = "Post does not exist"
             return Response({"message": message}, status=400)
+
