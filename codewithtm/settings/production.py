@@ -66,9 +66,9 @@ INSTALLED_APPS = [
         'django.contrib.staticfiles',
          # third party apps
         'django.contrib.sites',
-        'django.contrib.flatpages',
-        'django_celery_beat',
-        'django_celery_results',
+        # 'django.contrib.flatpages',
+        # 'django_celery_beat',
+        # 'django_celery_results',
         'ckeditor',
         'ckeditor_uploader',
         'corsheaders',

@@ -7,7 +7,7 @@ from django.contrib.auth import get_user_model
 from django.db.models.signals import pre_save, post_save
 from django.utils import timezone
 from django.contrib.contenttypes.models import ContentType
-from tags.signals import parsed_tags
+# from tags.signals import parsed_tags
 from codewithtm.validators import validate_content
 from codewithtm.utils import unique_slug_generator
 from authors.models import Author

@@ -59,10 +59,10 @@ INSTALLED_APPS = [
         'django.contrib.messages',
         'django.contrib.staticfiles',
         'django.contrib.sites',
-        'django.contrib.flatpages',
+        # 'django.contrib.flatpages',
         # third party apps
-        'django_celery_beat',
-        'django_celery_results',
+        # 'django_celery_beat',
+        # 'django_celery_results',
         'ckeditor',
         'ckeditor_uploader',
         'corsheaders',
