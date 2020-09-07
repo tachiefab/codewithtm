@@ -72,7 +72,7 @@ INSTALLED_APPS = [
         'ckeditor',
         'ckeditor_uploader',
         'corsheaders',
-        'markdown_deux',
+        # 'markdown_deux',
         'rest_framework',
         'drf_yasg',
         # local 
