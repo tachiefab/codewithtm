@@ -16,6 +16,13 @@ HOST_SERVER = settings.HOST_SERVER
 class CommentSerializer(serializers.ModelSerializer):
     user = UserPublicSerializer(read_only=True)
     uri             = serializers.SerializerMethodField(read_only=True)
+
+
+    user_profile_image = serializers.SerializerMethodField()
+    comment_user_name = serializers.SerializerMethodField()
+    # user_id = serializers.SerializerMethodField()
+
+
     date_display = serializers.SerializerMethodField()
     timesince = serializers.SerializerMethodField()
     reply_count = serializers.SerializerMethodField()
@@ -32,6 +39,10 @@ class CommentSerializer(serializers.ModelSerializer):
             'timesince',
             'date_display',
             'user',
+
+
+            'comment_user_name',
+            'user_profile_image'
         ]
 
     def get_uri(self, obj):
@@ -49,9 +60,26 @@ class CommentSerializer(serializers.ModelSerializer):
     def get_timesince(self, obj):
         return timesince(obj.timestamp) + " ago"
 
+    def get_comment_user_name(self, obj):
+        try:
+            user = obj.user
+            try:
+                first_name = user.first_name
+                last_name = user.last_name
+                name = first_name + " " + last_name
+            except:
+                name = user.username
+        except:
+           name = obj.name
+        return name
+
+    def get_user_profile_image(self, obj):
+        image = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+        return image
+
 
 class CommentCreateSerializer(CommentSerializer):
-        user = UserPublicSerializer(read_only=True)
+        # user = UserPublicSerializer(read_only=True)
         type = serializers.CharField(required=False, write_only=True)
         slug = serializers.CharField(required=True, write_only=True)
         parent_id = serializers.IntegerField(required=False)
@@ -125,7 +153,10 @@ class CommentListSerializer(CommentSerializer):
             'reply_count',
             'timesince',
             'date_display',
-            'user',
+            'comment_user_name',
+            'user_profile_image',
+            # 'user',
+
         ]
 
     def get_reply_count(self, obj):
@@ -139,10 +170,12 @@ class CommentChildSerializer(CommentSerializer):
         model = Comment
         fields = [
             'id',
-            'user',
+            # 'user',
             'content',
             'timesince',
             'date_display',
+            'comment_user_name',
+            'user_profile_image',
         ]
     read_only_fields = [
             'timesince',
@@ -166,7 +199,9 @@ class CommentDetailSerializer(CommentSerializer):
             'timesince',
             'date_display',
             'content_object_url',
-            'user',
+            # 'user',
+            'comment_user_name',
+            'user_profile_image',
             'replies',
         ]
         read_only_fields = [

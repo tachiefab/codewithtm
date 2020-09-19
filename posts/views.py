@@ -1,6 +1,7 @@
 from rest_framework import generics, mixins, permissions
 from django.shortcuts import get_object_or_404
 from django.contrib.auth import get_user_model
+from django.db.models import Q
 from rest_framework.response import Response
 from django.contrib.contenttypes.models import ContentType
 from rest_framework.views import APIView
@@ -65,8 +66,14 @@ class PostAPIView(
     permission_classes          = [permissions.IsAuthenticatedOrReadOnly]
     serializer_class            = PostListInlineSerializer
     passed_id                   = None
-    search_fields               = ('user__username', 'article', 'user__email')
-    ordering_fields             = ('user__username', 'timestamp')
+    search_fields               = (
+                                'author__user__username', 
+                                'author__user__first_name', 
+                                'author__user__last_name', 
+                                'article', 
+                                'author__user__email'
+                                )
+    ordering_fields             = ('author__user__username', 'timestamp')
 
     queryset                    = Post.objects.all()
     
@@ -80,6 +87,7 @@ class PostAPIView(
         queryset_list = []
         category_slug = self.request.GET.get("category")
         tag_slug = self.request.GET.get("tag")
+        query = self.request.GET.get("q")
         if category_slug:
             category_qs  = get_object_or_404(Category, slug=category_slug)
             queryset_list = Post.objects.filter(category=category_qs)
@@ -88,6 +96,17 @@ class PostAPIView(
             queryset_list = Post.objects.filter(tags__title__icontains=tag_qs)
         else:
             queryset_list = Post.objects.all()
+        if query:
+            queryset_list = Post.objects.filter(
+                    Q(title__icontains=query)|
+                    Q(slug__icontains=query)|
+                    Q(summary__icontains=query)|
+                    Q(read_time__icontains=query)|
+                    Q(tags__title__icontains=query)|
+                    Q(category__title__icontains=query)|
+                    Q(author__user__first_name__icontains=query) |
+                    Q(author__user__last_name__icontains=query)
+                    ).distinct()
         return queryset_list
 
 

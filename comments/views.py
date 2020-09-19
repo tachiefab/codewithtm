@@ -39,7 +39,10 @@ class CommentCreateAPIView(CreateAPIView):
 
     def get_serializer_context(self):
         context = super(CommentCreateAPIView, self).get_serializer_context()
-        context['user'] = self.request.user
+        user = None
+        if self.request.user.is_authenticated:
+            user = self.request.user
+        context['user'] = user
         return context
 
 

@@ -15,7 +15,7 @@ from likes.models import Like
 from tags.models import Tag
 from categories.models import Category
 from comments.models import Comment
-# from notifications.tasks import notifications
+from notifications.tasks import notifications, add
 from .choices import STATUSES, STATUS_PUBLISHED
 from .utils import get_read_time, get_post_for_direction
 
@@ -132,11 +132,14 @@ def post_like_receiver(sender, instance, created, *args, **kwargs):
     username = user.username
     verb = 'created a new post called '
     sender = Post
-    # content_type_id = ContentType.objects.get_for_model(Post)#.id
+    content_type_id = ContentType.objects.get_for_model(Post).id
     # content_type = ContentType.objects.get_for_model(model=content_type_id)
+    # print("Hi Tachie You are Genuis")
     # print(content_type_id)
+    # print("Hi Tachie You are Genuis")
     # print(dir(content_type_id))
-    # notifications.delay(username, target_id, verb)
+    # notifications.delay(username, target_id, content_type_id, verb)
+    add.delay(10,10)
 
 post_save.connect(post_like_receiver, sender=Post)
 

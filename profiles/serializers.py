@@ -1,4 +1,5 @@
 from rest_framework.serializers import SerializerMethodField, ModelSerializer
+from rest_framework import serializers
 from django.conf import settings
 from rest_framework.reverse import reverse as api_reverse
 from django.shortcuts import get_object_or_404
@@ -11,16 +12,19 @@ class PublicProfileSerializer(ModelSerializer):
     first_name = SerializerMethodField(read_only=True)
     last_name = SerializerMethodField(read_only=True)
     profile_image = SerializerMethodField()
+    phone = SerializerMethodField()
     bio = SerializerMethodField()
-    location = SerializerMethodField()
+    country = SerializerMethodField()
     class Meta:
         model = Profile
         fields = [
             "first_name",
             "last_name",
             "profile_image",
+            "phone",
+            "country",
             "bio",
-            "location",
+            "country",
         ]
     
     def get_first_name(self, obj):
@@ -38,9 +42,53 @@ class PublicProfileSerializer(ModelSerializer):
            image = obj.get_profile_image_url()
         return image
 
+    def get_phone(self, obj):
+        return obj.phone
+
     def get_bio(self, obj):
         return obj.bio
 
-    def get_location(self, obj):
-        return obj.location
+    def get_country(self, obj):
+        return obj.country
 
+
+class UpdateProfileSerializer(serializers.Serializer):
+    first_name = serializers.CharField(
+                                min_length=6, 
+                                max_length=68,
+                                required=False, 
+                                write_only=True
+                                )
+    last_name = serializers.CharField(
+                                min_length=6, 
+                                max_length=68,
+                                required=False, 
+                                write_only=True
+                                )
+    phone = serializers.CharField(
+                                min_length=6, 
+                                max_length=68,
+                                required=False, 
+                                write_only=True
+                                )
+    website = serializers.CharField(
+                                min_length=6, 
+                                max_length=100,
+                                required=False, 
+                                write_only=True
+                                )
+    country = serializers.CharField(
+                                min_length=6, 
+                                max_length=68,
+                                required=False, 
+                                write_only=True
+                                )
+
+    class Meta:
+        fields = [
+                'first_name', 
+                'last_name', 
+                'phone',
+                'website', 
+                'country'
+                ]

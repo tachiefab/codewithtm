@@ -23,7 +23,8 @@ class CommentManager(models.Manager):
         if model_qs.exists():
             SomeModel = model_qs.first().model_class()
             obj_qs = SomeModel.objects.filter(slug=slug)
-            # obj_qs = SomeModel.objects.filter(id=obj_id) #use this when comments are created based on id
+            # obj_qs = SomeModel.objects.filter(id=obj_id) 
+            #use this when comments are created based on id
             if obj_qs.exists() and obj_qs.count() == 1:
                 instance = self.model()
                 instance.content = content

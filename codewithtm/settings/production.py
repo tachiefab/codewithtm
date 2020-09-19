@@ -69,13 +69,13 @@ INSTALLED_APPS = [
         'django.contrib.staticfiles',
          # third party apps
         'django.contrib.sites',
-        # 'django.contrib.flatpages',
-        # 'django_celery_beat',
-        # 'django_celery_results',
+        'django.contrib.flatpages',
+        'django_celery_beat',
+        'django_celery_results',
         'ckeditor',
         'ckeditor_uploader',
         'corsheaders',
-        # 'markdown_deux',
+        'phonenumber_field',
         'rest_framework',
         'drf_yasg',
         # local 
@@ -228,12 +228,13 @@ from codewithtm.ckeditorconf.conf import *
 from codewithtm.restconf.main import *
 
 # Celery settings
-# CELERY_BROKER_URL = 'redis://localhost:6379'
-# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TIMEZONE = TIME_ZONE
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
+
 
 # Heroku settings
 CORS_REPLACE_HTTPS_REFERER      = True

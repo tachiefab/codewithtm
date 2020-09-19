@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.db import models
+from phonenumber_field.modelfields import PhoneNumberField
 from django.db.models.signals import post_save
 
 
@@ -13,7 +14,9 @@ class Profile(models.Model):
                                     related_name='profile'
                                     )
     profile_image       = models.ImageField(upload_to=upload_profile_image, null=True, blank=True)
-    location = models.CharField(max_length=220, null=True, blank=True)
+    phone = PhoneNumberField(blank=True, null=True)
+    website = models.CharField(max_length=220, null=True, blank=True)
+    country = models.CharField(max_length=220, null=True, blank=True)
     bio = models.TextField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
