@@ -15,7 +15,8 @@ import os
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 
@@ -118,7 +119,7 @@ ROOT_URLCONF = 'codewithtm.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, "templates")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -197,10 +198,6 @@ MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static-server', 'media-roo
 # # MEDIA_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static_in_env", "media_root")
 PROTECTED_ROOT = os.path.join(os.path.dirname(BASE_DIR), "static-server", "protected")
 
-# Sites framework
-
-SITE_ID = 1
-
 
 # ck editor settings
 from codewithtm.ckeditorconf.conf import *
@@ -209,8 +206,8 @@ from codewithtm.ckeditorconf.conf import *
 from codewithtm.restconf.main import *
 
 # Celery settings
-CELERY_BROKER_URL = 'redis://localhost:6379'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+# CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_RESULT_BACKEND = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
@@ -226,3 +223,42 @@ CSRF_COOKIE_SECURE              = False
 SECURE_HSTS_SECONDS             = None
 SECURE_HSTS_INCLUDE_SUBDOMAINS  = False
 SECURE_FRAME_DENY               = False
+
+
+# *******************************************
+# My custom configurations
+# *******************************************
+# For base url, include "/" at the end
+BASE_URL = HOST_SERVER
+
+# For app labels section here
+APP_LABEL_MYROOT = 'codewithtm'
+
+# Common Site Information here
+SITE_SHORT_NAME = APP_LABEL_MYROOT
+SITE_FULL_NAME = APP_LABEL_MYROOT
+SITE_YEAR_STARTED = "2020"
+SITE_URL_HOME = HOST_SERVER
+SITE_SLOGAN = SITE_FULL_NAME + " - create, share, entertain"
+SITE_CONTACT_US = BASE_URL + 'contact'
+
+# common Company information
+COMPANY_ADDRESS = "codewithtm Inc, 3rd Floor, Cocoa Board, Sunyani, Ghana."
+UNSUBSCRIBE_MESSAGE = "Don't like these emails?"
+UNSUBSCRIBE_LINK = "http://i.imgur.com/CScmqnj.gif"
+
+# Minimum characters for search
+# MIN_CHARS_SEARCH = 3
+# https://cdn-7music-upload.s3.amazonaws.com/static/assets/icon/favicon-32x32.png
+# App Common Information
+APP_EMAIL_FROM = EMAIL_HOST_USER
+APP_EMAIL_BCC = EMAIL_HOST_USER
+# APP_URL_TOP_LOGO = URL + 'static/assets/icon/favicon-32x32.png'
+# APP_USER_AUTH_RE_ACCESS_LOGIN_PAGE = 'helloworld'
+# APP_SITE_TEMPLATE_COLOR ='#000000'
+
+# Default Avatar
+# DEFAULT_AVATAR = APP_URL_TOP_LOGO #STATIC_URL + 'assets/images/avatar.png'
+
+# # Enable the defaut site framework
+SITE_ID = 1

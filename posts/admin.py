@@ -19,7 +19,7 @@ class PostAdminForm(forms.ModelForm):
                     )
         widgets = {
             'article': CKEditorUploadingWidget(),
-            # 'article': CKEditorUploadingWidget(config_name='codewithtm'),
+            # 'article': CKEditorUploadingWidget(czz),
             'summary': CKEditorUploadingWidget(config_name='small'),
         }
 

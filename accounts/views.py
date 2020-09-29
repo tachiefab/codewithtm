@@ -1,5 +1,6 @@
 from django.contrib.auth import authenticate, get_user_model
 from django.db.models import Q
+from django.utils import timezone
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -29,7 +30,7 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.contrib.sites.shortcuts import get_current_site
 from django.urls import reverse
 from rest_framework.reverse import reverse as api_reverse
-from reachus.utils import Util
+from reachus.tasks import send_email
 
 jwt_payload_handler             = api_settings.JWT_PAYLOAD_HANDLER
 jwt_encode_handler              = api_settings.JWT_ENCODE_HANDLER
@@ -76,11 +77,32 @@ class RegisterAPIView(generics.GenericAPIView):
         token = RefreshToken.for_user(user).access_token
         current_site = settings.HOST_PRODUCTION_SERVER 
         absurl = current_site + "auth/very-email/" + str(token)
-        email_body = 'Hi '+ user.username + \
-            ' Use the link below to verify your email \n' + absurl
-        data = {'email_body': email_body, 'to_email': user.email,
-                'email_subject': 'Verify your email'}
-        Util.send_email(data)
+
+        username = user.username 
+        preview_header = 'Please Use the link below to comfirm your email.'
+        subject = 'Verify your email'
+        message_first = """
+                        you requested to creae an account with codewithtm with this email address.
+                        If you did this, then please use the link below to comfirm your email address. 
+                        """
+        message_second= """
+                        If you did not do this the please safely disregard this email.
+                        """
+        call2action_text = 'Confirm your email'
+        call2action_link = absurl
+
+        data = {
+                'username':username, 
+                'preview_header': preview_header,
+                'subject': subject, 
+                'message_first': message_first, 
+                'message_second': message_second, 
+                'call2action_text': call2action_text,
+                'call2action_link': call2action_link,
+                'to_email': user.email
+                }
+
+        send_email.delay(data)
         return Response(status=status.HTTP_201_CREATED)
 
 
@@ -123,15 +145,32 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
             current_site = settings.HOST_PRODUCTION_SERVER 
             absurl = current_site + "auth/password-reset/" + str(uidb64) + '/' + str(token)
 
-            email_body = 'Hi '+ user.username + ',' + \
-            """
-            you or someone pretending to be you requested to change your codewithtm password.
-            If you did this, then please use the link below to reset your password \n
-            """  + absurl + '\n If you did not do this the please safely disregard this email.'
+            username = user.username 
+            preview_header = 'Please use the link below to reset your password.'
+            subject = 'Reset your passsword'
+            message_first = """
+                            you or someone pretending to be you requested to change your codewithtm password.\n
+                            If you did this, then please use the link below to reset your password 
+                            """
+            message_second= """
+                            If you did not do this the please safely disregard this email.
+                            """
+            call2action_text = 'reset password'
+            call2action_link = absurl
 
-            data = {'email_body': email_body, 'to_email': user.email,
-                    'email_subject': 'Reset your passsword'}
-            Util.send_email(data)
+            data = {
+                    'username':username, 
+                    'preview_header': preview_header,
+                    'subject': subject, 
+                    'message_first': message_first, 
+                    'message_second': message_second, 
+                    'call2action_text': call2action_text,
+                    'call2action_link': call2action_link,
+                    'to_email': user.email
+                    }
+
+            send_email.delay(data)
+
         return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
         
 

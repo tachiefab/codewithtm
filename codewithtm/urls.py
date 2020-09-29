@@ -48,6 +48,7 @@ urlpatterns = [
      path('api/newsletter/', include('marketing.urls', namespace='api-marketing')),
     path('api/posts/', include('posts.urls', namespace='api-posts')),
     path('api/contact-us/', include('reachus.urls', namespace='api-reachus')),
+    path('api/notifications/', include('notifications.urls', namespace='api-notifications')),
     path('api/tags/', include('tags.urls', namespace='api-tags')),
     path('api/user/', include('accounts.user.urls', namespace='api-user')),
     path('api/user/profile/', include('profiles.urls', namespace='api-profiles')),

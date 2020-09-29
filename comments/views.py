@@ -84,8 +84,7 @@ class CommentListAPIView(ListAPIView):
 
 class CommentLikeAPIView(APIView):
     permission_classes = [permissions.IsAuthenticated]
-    # lookup_field = 'slug'
-
+    
     def get(self, request, pk, format=None):
         sender = Comment
         c_type = ContentType.objects.get_for_model(sender)

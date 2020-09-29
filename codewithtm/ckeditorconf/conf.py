@@ -66,7 +66,7 @@ CKEDITOR_CONFIGS = {
             'uploadimage', # the upload image feature
             # your extra plugins here
             'codesnippet',
-            'youtube',
+            # 'youtube',
             'div',
             'autolink',
             'autoembed',

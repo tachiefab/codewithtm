@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from accounts.permissions import IsOwnerOrReadOnly
 from .models import Profile
 from .serializers import PublicProfileSerializer, UpdateProfileSerializer
+from notifications.serializers import NotificationDisplaySerializer
 
 User = get_user_model()
 
@@ -46,3 +47,5 @@ class UpdateProfile(generics.GenericAPIView):
         except:
             message = 'Profile updated failed'
             return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+

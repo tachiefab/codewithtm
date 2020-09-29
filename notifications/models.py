@@ -4,6 +4,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.urls import reverse
 from django.db import models
 from .signals import notify
+from profiles.models import Profile
+
 
 class NotificationQuerySet(models.query.QuerySet):
 	def get_user(self, receipient):
@@ -79,7 +81,7 @@ class Notification(models.Model):
 	target_object_id = models.PositiveIntegerField(null=True, blank=True)
 	target_object = GenericForeignKey("target_content_type", "target_object_id")
 	receipient = models.ForeignKey(
-								settings.AUTH_USER_MODEL, 
+								Profile, 
 								on_delete=models.CASCADE, 
 								related_name='notifications'
 							)
@@ -100,7 +102,7 @@ class Notification(models.Model):
 			"verb": self.verb,
 			"action": self.action_object,
 			"target": self.target_object,
-			"verify_read": reverse("notifications:notifications_read", kwargs={"id": self.id}),
+			"verify_read": reverse("notifications:notifications_read", kwargs={"pk": self.id}),
 			"target_url": target_url,
 		}
 		if self.target_object:
@@ -110,6 +112,7 @@ class Notification(models.Model):
 				return "%(sender)s %(verb)s %(action)s" %context
 			return "%(sender)s %(verb)s" %context
 		return "%(sender)s %(verb)s" %context
+		# return str(self.read)
 	
 	@property	
 	def get_link(self):
@@ -123,7 +126,7 @@ class Notification(models.Model):
 			"verb": self.verb,
 			"action": self.action_object,
 			"target": self.target_object,
-			"verify_read": reverse("notifications:notifications_read", kwargs={"id": self.id}),
+			"verify_read": reverse("notifications:notifications_read", kwargs={"pk": self.id}),
 			"target_url": target_url,
 		}
 		if self.target_object:
