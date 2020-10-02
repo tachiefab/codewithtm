@@ -66,6 +66,7 @@ class RegisterAPIView(generics.GenericAPIView):
 
     serializer_class = UserRegisterSerializer
     renderer_classes = (UserRenderer,)
+    permission_classes          = [permissions.AllowAny]
 
     def post(self, request):
         user = request.data
