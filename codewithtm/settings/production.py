@@ -45,7 +45,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'j2b_z(*4w+#)t^nz3)0n3da(tcj&3##klo73m
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
 
-ALLOWED_HOSTS = ['codewithtm.herokuapp.com']
+ALLOWED_HOSTS = ['codewithtm.herokuapp.com'] 
 DEBUG = True
 
 # ALLOWED_HOSTS = []
@@ -229,7 +229,7 @@ from codewithtm.ckeditorconf.conf import *
 from codewithtm.restconf.main import *
 
 # Celery settings
-CELERY_BROKER_URL = 'redis://h:pf93dec0495e2404b3a1ca0cd012fda43c09edbaa581ca2d5237e92e280eabc40@ec2-3-212-177-190.compute-1.amazonaws.com:27299'
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL')
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL 
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
