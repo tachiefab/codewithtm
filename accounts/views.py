@@ -83,7 +83,7 @@ class RegisterAPIView(generics.GenericAPIView):
         preview_header = 'Please Use the link below to comfirm your email.'
         subject = 'Verify your email'
         message_first = """
-                        you requested to creae an account with codewithtm with this email address.
+                        you requested to create an account with codewithtm with this email address.
                         If you did this, then please use the link below to comfirm your email address. 
                         """
         message_second= """
