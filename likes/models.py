@@ -78,12 +78,12 @@ def post_like_receiver(sender, instance, created, *args, **kwargs):
                     object_id=instance.id
             )
 
-        ''' Notifying users of a new post '''
-        target_id = instance.id
-        user = get_object_or_404(User, username='tachiefab')
-        username = user.username
-        verb = 'created a new post called '
-        notifications.delay(target_id, verb)
+    ''' Notifying users of a new post '''
+    target_id = instance.id
+    user = get_object_or_404(User, username='tachiefab')
+    username = user.username
+    verb = 'created a new post called '
+    notifications.delay(target_id, verb)
 
 post_save.connect(post_like_receiver, sender=Post)
 
