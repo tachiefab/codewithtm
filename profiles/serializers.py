@@ -11,19 +11,23 @@ HOST_SERVER = settings.HOST_SERVER
 class PublicProfileSerializer(ModelSerializer):
     first_name = SerializerMethodField(read_only=True)
     last_name = SerializerMethodField(read_only=True)
+    email = SerializerMethodField(read_only=True)
     profile_image = SerializerMethodField()
     phone = SerializerMethodField()
     bio = SerializerMethodField()
+    website = SerializerMethodField()
     country = SerializerMethodField()
     class Meta:
         model = Profile
         fields = [
             "first_name",
             "last_name",
+            "email",
             "profile_image",
             "phone",
             "country",
             "bio",
+            "website",
             "country",
         ]
     
@@ -32,6 +36,9 @@ class PublicProfileSerializer(ModelSerializer):
     
     def get_last_name(self, obj):
         return obj.user.last_name
+
+    def get_email(self, obj):
+        return obj.user.email
 
 
     def get_profile_image(self, obj):
@@ -43,7 +50,10 @@ class PublicProfileSerializer(ModelSerializer):
         return image
 
     def get_phone(self, obj):
-        return obj.phone
+        return str(obj.phone)
+
+    def get_website(self, obj):
+        return obj.website
 
     def get_bio(self, obj):
         return obj.bio

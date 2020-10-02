@@ -6,6 +6,7 @@ from rest_framework.serializers import (
     )
 from notifications.models import Notification
 from django.urls import reverse_lazy
+from django.utils.timesince import timesince
 from accounts.serializers import UserPublicSerializer
 
 
@@ -14,7 +15,7 @@ class NotificationDisplaySerializer(serializers.ModelSerializer):
     link = SerializerMethodField()
     target = SerializerMethodField()
     slug = SerializerMethodField()
-    received_date = SerializerMethodField()
+    timesince = SerializerMethodField()
     status = SerializerMethodField()
 
     class Meta:
@@ -26,7 +27,7 @@ class NotificationDisplaySerializer(serializers.ModelSerializer):
             'target',
             'slug',
             'link',
-            'received_date',
+            'timesince',
             'status',
             
             ]
@@ -56,8 +57,8 @@ class NotificationDisplaySerializer(serializers.ModelSerializer):
                 slug = obj.target_object.username
         return slug
 
-    def get_received_date(self, obj):
-        return obj.timestamp.strftime("%b %d, %Y at %I:%M %p")
+    def get_timesince(self, obj):
+        return timesince(obj.timestamp) + " ago"
 
     def get_status(self, obj):
         status = obj.read
