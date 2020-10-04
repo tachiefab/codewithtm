@@ -28,8 +28,6 @@ class ContactUsAPIView(generics.GenericAPIView):
 			    	'preview_header': preview_header
 			    }
 			contact_us_send_email.delay(data)
-
-			# Util.send_email(data)
 			return Response({"success": "Sent"})
 		else:
 			return Response({'success': "Failed"}, status=status.HTTP_400_BAD_REQUEST)
