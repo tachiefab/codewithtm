@@ -45,11 +45,9 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'j2b_z(*4w+#)t^nz3)0n3da(tcj&3##klo73m
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = False
 
-<<<<<<< HEAD
+
 ALLOWED_HOSTS = ['codewithtm.herokuapp.com', 'codewithtm-58c9d.web.app']
-=======
 ALLOWED_HOSTS = ['codewithtm.herokuapp.com'] 
->>>>>>> 73a6cb0966c9b881b29a036f1a8ee31cff9bee16
 DEBUG = True
 
 # ALLOWED_HOSTS = []
