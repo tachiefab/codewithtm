@@ -129,10 +129,10 @@ class UserPublicSerializer(serializers.ModelSerializer):
     def get_uri(self, obj):
         request = self.context.get('request')
         try:
-            user_pk = obj.pk
+            username = obj.username
         except:
-            user_pk = obj.user.pk
-        return api_reverse("api-author:author-detail", kwargs={"pk": user_pk}, request=request)
+            username = obj.user.username
+        return api_reverse("api-author:author-detail", kwargs={"username": username}, request=request)
 
 
 class UserRegisterSerializer(serializers.ModelSerializer):

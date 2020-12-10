@@ -3,8 +3,8 @@ from django.conf import settings
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
-from likes.models import Like
 from codewithtm.validators import validate_content
+# from likes.tasks import auto_create_likes
 
 
 class CommentManager(models.Manager):
@@ -91,9 +91,11 @@ class Comment(models.Model):
 def comment_like_receiver(sender, instance, created, *args, **kwargs):
     c_type = ContentType.objects.get_for_model(sender)
     if created:
-        new_like_obj = Like.objects.create(
-                    content_type=c_type,
-                    object_id=instance.id
-            )
+        pass
+        # auto_create_likes.delay(instance.id, 'comment')
+        # new_like_obj = Like.objects.create(
+        #             content_type=c_type,
+        #             object_id=instance.id
+        #     )
 
 post_save.connect(comment_like_receiver, sender=Comment)

@@ -29,7 +29,6 @@ class LikedItemsListAPIView(ListAPIView):
                 for like in like_qs:
                     if user in like.liked.all():
                         obj_qs          = SomeModel.objects.filter(id=like.object_id)
-                        print(obj_qs)
                         if obj_qs.exists():
 
                             content_obj     = obj_qs.first()

@@ -35,6 +35,18 @@ class Profile(models.Model):
             image = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'
         return image
 
+    def get_notifications(self):
+        return self.notifications.all()
+
+    def get_notifications_count(self):
+        notifications = self.notifications.filter(read=False)
+        notifications_count = notifications.count()
+        if notifications_count > 99:
+            count = "99+"
+        else:
+            count = notifications_count
+        return count
+
 def user_did_save(sender, instance, created, *args, **kwargs):
     if created:
         Profile.objects.get_or_create(user=instance)
