@@ -46,19 +46,20 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'j2b_z(*4w+#)t^nz3)0n3da(tcj&3##klo73m
 # DEBUG = False
 
 
-ALLOWED_HOSTS = ['codewithtm.herokuapp.com']
+# ALLOWED_HOSTS = ['codewithtm.herokuapp.com']
 # ALLOWED_HOSTS = ['codewithtm.herokuapp.com'] 
+ALLOWED_HOSTS = ['*']
 DEBUG = True
 
-# ALLOWED_HOSTS = []
+
 HOST_PRODUCTION_SERVER =  'https://codewithtm-58c9d.web.app/'
 HOST_SERVER =  HOST_PRODUCTION_SERVER #'http://127.0.0.1:8000'
 
 CORS_ORIGIN_WHITELIST = (
-     'http://localhost:4200',
-     'http://127.0.0.1:4200',
+     # 'http://localhost:4200',
+     # 'http://127.0.0.1:4200',
      'https://codewithtm-58c9d.web.app',
-     'codewithtm.herokuapp.com'
+     # 'codewithtm.herokuapp.com'
 )
 
 
