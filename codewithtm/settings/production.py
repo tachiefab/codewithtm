@@ -46,7 +46,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'j2b_z(*4w+#)t^nz3)0n3da(tcj&3##klo73m
 # DEBUG = False
 
 
-ALLOWED_HOSTS = ['codewithtm.herokuapp.com', 'redis://h:pf93dec0495e2404b3a1ca0cd012fda43c09edbaa581ca2d5237e92e280eabc40@ec2-54-157-138-132.compute-1.amazonaws.com:17229']
+ALLOWED_HOSTS = ['codewithtm.herokuapp.com']
 # ALLOWED_HOSTS = ['codewithtm.herokuapp.com'] 
 DEBUG = True
 
@@ -55,10 +55,9 @@ HOST_PRODUCTION_SERVER =  'https://codewithtm-58c9d.web.app/'
 HOST_SERVER =  HOST_PRODUCTION_SERVER #'http://127.0.0.1:8000'
 
 CORS_ORIGIN_WHITELIST = (
-     # 'http://localhost:4200',
-     # 'http://127.0.0.1:4200',
-     'https://codewithtm-58c9d.web.app',
-     'redis://h:pf93dec0495e2404b3a1ca0cd012fda43c09edbaa581ca2d5237e92e280eabc40@ec2-54-157-138-132.compute-1.amazonaws.com:17229'
+     'http://localhost:4200',
+     'http://127.0.0.1:4200',
+     'https://codewithtm-58c9d.web.app'
 )
 
 
