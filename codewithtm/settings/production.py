@@ -58,7 +58,7 @@ CORS_ORIGIN_WHITELIST = (
      # 'http://localhost:4200',
      # 'http://127.0.0.1:4200',
      'https://codewithtm-58c9d.web.app',
-     # 'codewithtm.herokuapp.com'
+     'redis://h:pf93dec0495e2404b3a1ca0cd012fda43c09edbaa581ca2d5237e92e280eabc40@ec2-54-157-138-132.compute-1.amazonaws.com:17229'
 )
 
 
