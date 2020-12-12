@@ -241,6 +241,15 @@ CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = TIME_ZONE
 
 
+CACHES = {
+    "default": {
+         "BACKEND": "redis_cache.RedisCache",
+         "LOCATION": os.environ.get('REDIS_URL'),
+    }
+}
+
+
+
 # Heroku settings
 CORS_REPLACE_HTTPS_REFERER      = True
 HOST_SCHEME                     = "https://"
