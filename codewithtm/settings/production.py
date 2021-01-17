@@ -51,13 +51,13 @@ ALLOWED_HOSTS = ['codewithtm.herokuapp.com']
 DEBUG = True
 
 # ALLOWED_HOSTS = []
-HOST_PRODUCTION_SERVER =  'https://codewithtm-58c9d.web.app/'
+HOST_PRODUCTION_SERVER =  'https://codewithtm.com'
 HOST_SERVER =  HOST_PRODUCTION_SERVER #'http://127.0.0.1:8000'
 
 CORS_ORIGIN_WHITELIST = (
      'http://localhost:4200',
      'http://127.0.0.1:4200',
-     'https://codewithtm-58c9d.web.app'
+     'https://codewithtm.com'
 )
 
 
@@ -233,12 +233,12 @@ from codewithtm.restconf.main import *
 # Celery settings
 # CELERY_BROKER_URL = os.environ.get('REDIS_URL')
 # CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
-# CELERY_BROKER_URL=os.environ['REDIS_URL']
-# CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
-# CELERY_ACCEPT_CONTENT = ['application/json']
-# CELERY_TASK_SERIALIZER = 'json'
-# CELERY_RESULT_SERIALIZER = 'json'
-# CELERY_TIMEZONE = TIME_ZONE
+CELERY_BROKER_URL=os.environ['REDIS_URL']
+CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = TIME_ZONE
 
 
 CACHES = {
