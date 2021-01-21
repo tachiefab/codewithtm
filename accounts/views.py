@@ -170,7 +170,9 @@ class RequestPasswordResetEmail(generics.GenericAPIView):
                     'to_email': user.email
                     }
 
-            send_email.delay(data)
+            #Uncomment to use celery 
+            # send_email.delay(data)
+            send_email(data)
 
         return Response({'success': 'We have sent you a link to reset your password'}, status=status.HTTP_200_OK)
         
