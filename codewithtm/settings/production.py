@@ -55,8 +55,8 @@ HOST_PRODUCTION_SERVER =  'https://codewithtm.com'
 HOST_SERVER =  HOST_PRODUCTION_SERVER #'http://127.0.0.1:8000'
 
 CORS_ORIGIN_WHITELIST = (
-     'https://codewithtm-58c9d.web.app',
-     'https://codewithtm.com',
+     # 'https://codewithtm-58c9d.web.app',
+     # 'https://codewithtm.com',
      'codewithtm.com'
 )
 
@@ -151,12 +151,12 @@ WSGI_APPLICATION = 'codewithtm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Heroku database
 import dj_database_url
