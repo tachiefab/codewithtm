@@ -63,37 +63,38 @@ class Like(models.Model):
         return count
 
 
-# def post_like_receiver(sender, instance, created, *args, **kwargs):
-#     c_type = ContentType.objects.get_for_model(sender)
-#     if created:
-#         '''updating post order to have equal value as the it'''
-#         instance.order = instance.id
-#         instance.save()
-#         '''saving post like instance'''
-#         # content_type_id = ContentType.objects.get_for_model(sender).id
-#         # auto_create_likes.delay(instance.id, 'post')
+def post_like_receiver(sender, instance, created, *args, **kwargs):
+    c_type = ContentType.objects.get_for_model(sender)
+    if created:
+        '''updating post order to have equal value as the it'''
+        instance.order = instance.id
+        instance.save()
+        '''saving post like instance'''
+        # content_type_id = ContentType.objects.get_for_model(sender).id
+        # auto_create_likes.delay(instance.id, 'post')
 
-#         new_like_obj = Like.objects.create(
-#                     content_type=c_type,
-#                     object_id=instance.id
-#             )
+        new_like_obj = Like.objects.create(
+                    content_type=c_type,
+                    object_id=instance.id
+            )
 
-#     ''' Notifying users of a new post '''
-#     target_id = instance.id
-#     user = get_object_or_404(User, username='tachiefab')
-#     username = user.username
-#     verb = 'created a new post called '
-#     notifications.delay(target_id, verb)
+    ''' Notifying users of a new post '''
+    target_id = instance.id
+    user = get_object_or_404(User, username='tachiefab')
+    username = user.username
+    verb = 'created a new post called '
+    # Uncomment to use celery
+    # notifications.delay(target_id, verb)
 
-# post_save.connect(post_like_receiver, sender=Post)
+post_save.connect(post_like_receiver, sender=Post)
 
 
-# def comment_like_receiver(sender, instance, created, *args, **kwargs):
-#     c_type = ContentType.objects.get_for_model(sender)
-#     if created:
-#         new_like_obj = Like.objects.create(
-#                     content_type=c_type,
-#                     object_id=instance.id
-#             )
+def comment_like_receiver(sender, instance, created, *args, **kwargs):
+    c_type = ContentType.objects.get_for_model(sender)
+    if created:
+        new_like_obj = Like.objects.create(
+                    content_type=c_type,
+                    object_id=instance.id
+            )
 
-# post_save.connect(comment_like_receiver, sender=Comment)
+post_save.connect(comment_like_receiver, sender=Comment)
