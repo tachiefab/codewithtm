@@ -193,6 +193,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+# TIME_ZONE = 'Africa/Accra'
 
 TIME_ZONE = 'UTC'
 
@@ -239,20 +240,20 @@ from codewithtm.restconf.main import *
 # Celery settings
 # CELERY_BROKER_URL = os.environ.get('REDIS_URL')
 # CELERY_RESULT_BACKEND = os.environ.get('REDIS_URL')
-CELERY_BROKER_URL=os.environ['REDIS_URL']
-CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
-CELERY_ACCEPT_CONTENT = ['application/json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
-CELERY_TIMEZONE = TIME_ZONE
+# CELERY_BROKER_URL=os.environ['REDIS_URL']
+# CELERY_RESULT_BACKEND=os.environ['REDIS_URL']
+# CELERY_ACCEPT_CONTENT = ['application/json']
+# CELERY_TASK_SERIALIZER = 'json'
+# CELERY_RESULT_SERIALIZER = 'json'
+# CELERY_TIMEZONE = TIME_ZONE
 
 
-CACHES = {
-    "default": {
-         "BACKEND": "redis_cache.RedisCache",
-         "LOCATION": os.environ.get('REDIS_URL'),
-    }
-}
+# CACHES = {
+#     "default": {
+#          "BACKEND": "redis_cache.RedisCache",
+#          "LOCATION": os.environ.get('REDIS_URL'),
+#     }
+# }
 
 
 
@@ -280,7 +281,7 @@ APP_LABEL_MYROOT = 'codewithtm'
 # Common Site Information here
 SITE_SHORT_NAME = APP_LABEL_MYROOT
 SITE_FULL_NAME = APP_LABEL_MYROOT
-SITE_YEAR_STARTED = "2020"
+SITE_YEAR_STARTED = "2021"
 SITE_URL_HOME = HOST_SERVER
 SITE_SLOGAN = SITE_FULL_NAME + " - create, share, entertain"
 SITE_CONTACT_US = BASE_URL + 'contact'
