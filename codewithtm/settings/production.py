@@ -55,8 +55,8 @@ HOST_PRODUCTION_SERVER =  'https://codewithtm.com'
 HOST_SERVER =  HOST_PRODUCTION_SERVER #'http://127.0.0.1:8000'
 
 CORS_ORIGIN_WHITELIST = (
-     # 'https://codewithtm-58c9d.web.app',
-     # 'https://codewithtm.com',
+     'https://codewithtm-58c9d.web.app',
+     'https://codewithtm.com',
      'codewithtm.com'
 )
 
