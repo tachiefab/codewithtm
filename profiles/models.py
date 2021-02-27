@@ -4,8 +4,8 @@ from phonenumber_field.modelfields import PhoneNumberField
 from django.db.models.signals import post_save
 
 
-def upload_profile_image(instance, filename):
-    return "profile/{username}/{filename}".format(username=instance.user.username, filename=filename)
+# def upload_profile_image(instance, filename):
+#     return "profile/{username}/{filename}".format(username=instance.user.username, filename=filename)
 
 class Profile(models.Model):
     user        = models.OneToOneField(
@@ -13,7 +13,8 @@ class Profile(models.Model):
                                     on_delete=models.CASCADE, 
                                     related_name='profile'
                                     )
-    profile_image       = models.ImageField(upload_to=upload_profile_image, null=True, blank=True)
+    # profile_image       = models.ImageField(upload_to=upload_profile_image, null=True, blank=True)
+    profile_image = models.TextField(blank=True, null=True)
     phone = PhoneNumberField(blank=True, null=True)
     website = models.CharField(max_length=220, null=True, blank=True)
     country = models.CharField(max_length=220, null=True, blank=True)
@@ -30,10 +31,18 @@ class Profile(models.Model):
 
     def get_profile_image_url(self):
         try:
-            image = self.profile_image.url
+            image = self.profile_image
         except:
             image = 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909__340.png'
         return image
+
+
+    # def get_image_url(self):
+    #     img = self.image_path
+    #     if img:
+    #         return img
+    #     img = "https://static.staah.net/images/noimage-640x480.jpg"
+    #     return img
 
     def get_notifications(self):
         return self.notifications.all()

@@ -29,7 +29,7 @@ class AuthorPublicSerializer(ModelSerializer):
     def get_profile_image(self, obj):
         try:
             img = obj.user.profile.get_profile_image_url()
-            image = HOST_SERVER + img
+            image = HOST_SERVER + "/" + img
         except:
            image = None
         return image
