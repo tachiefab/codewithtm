@@ -55,7 +55,8 @@ class Post(models.Model):
 
     class Meta:
         unique_together = ('slug', 'category')
-        ordering = ['order', '-timestamp']
+        ordering = ['-timestamp']
+        # ordering = ['order', '-timestamp']
 
     @property
     def owner(self):
