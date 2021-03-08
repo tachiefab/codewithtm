@@ -27,3 +27,13 @@ class CategorySerializer(serializers.ModelSerializer):
 	    qs = Faq.objects.filter(category=obj)
 	    data = FaqSerializer(qs[:limit], many=True, context={'request': request}).data
 	    return data
+
+
+class CategoryListSerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model= Category
+		fields = [
+			'title',
+			'slug',
+		]
